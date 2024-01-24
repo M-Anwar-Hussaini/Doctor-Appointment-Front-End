@@ -6,12 +6,20 @@ const Doctor = () => {
 
   return (
     <div className="h-screen gap-3 md:flex items-center justify-center">
-      <div className="">
-        <img
-          src="https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg"
-          alt="doctor"
-          className="w-full object-cover"
-        />
+      <div className="flex flex-col gap-3">
+        <div>
+          <img
+            src="https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg"
+            alt="doctor"
+            className="w-full object-cover"
+          />
+        </div>
+        <Link
+          to={`/doctors/${id}/delete`}
+          className="bg-red-400 text-white text-center rounded-full p-3 px-5"
+        >
+          Delete
+        </Link>
       </div>
       <div className="p-3">
         <h2 className="text-2xl font-bold py-4">Doctor name here</h2>
