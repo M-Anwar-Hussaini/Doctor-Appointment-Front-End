@@ -1,0 +1,64 @@
+/* DoctorForm.css */
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-container button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #45a049;
+}
+
+#startingShift {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: textfield;
+}
+
+/* #startingShift::-moz-range-thumb {
+  display: none;
+}
+
+#startingShift::-webkit-inner-spin-button,
+#startingShift::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+#endingShift {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: textfield;
+}
+
+#endingShift::-moz-range-thumb {
+  display: none;
+}
+
+#endingShift::-webkit-inner-spin-button,
+#endingShift::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+} */

@@ -1,0 +1,33 @@
+/* DoctorsList.css */
+.doctors-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.doctors-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.doctor-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-item img {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.doctor-item h3 {
+  margin-top: 0;
+}
+
+.doctor-item p {
+  margin: 5px 0;
+}
