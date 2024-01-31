@@ -15,16 +15,26 @@ function ReservationForm() {
 
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState('');
+  const [authToken, setAuthToken] = useState('');
+
+  useEffect(() => {
+    // Retrieve the authentication token from local storage
+    const token = localStorage.getItem('userToken');
+    setAuthToken(token);
+  }, []);
 
   useEffect(() => {
     // Fetch available slots for the doctor with the given doctorId
     const fetchAvailableSlots = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/doctors/${doctorId}/available_slots`);
+        const response = await fetch(`http://localhost:3000/doctors/${doctorId}/available_slots`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`, // Include the auth token in the headers
+          },
+        });
         console.log('THIS IS THE doctorId', doctorId);
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
           setAvailableSlots(data);
         } else {
           console.error('Failed to fetch available slots');
@@ -35,7 +45,7 @@ function ReservationForm() {
     };
 
     fetchAvailableSlots();
-  }, [doctorId]);
+  }, [doctorId, authToken]);
 
   const getMonthNumber = (monthName) => {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -50,7 +60,7 @@ function ReservationForm() {
         ...prevData,
         start_time: parseInt(selectedSlotDetails.start_time.split(':')[0], 10), // Convert start_time to a number
         end_time: parseInt(selectedSlotDetails.end_time.split(':')[0], 10),
-        day_of_month: selectedSlotDetails.day_of_month,
+        day_of_month: parseInt(selectedSlotDetails.day_of_month, 10),
         day_of_week: selectedSlotDetails.day_of_week,
         month: getMonthNumber(selectedSlotDetails.month),
       }));
@@ -70,6 +80,7 @@ function ReservationForm() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`, // Include the auth token in the headers
       },
       body: JSON.stringify({ reservation: { ...reservationData } }),
     })
@@ -78,7 +89,8 @@ function ReservationForm() {
           // Handle success
           alert('Reservation successfully created.');
           setReservationData({
-            time_booked: '',
+            start_time: '', // Convert start_time to a number
+            end_time: '',
             day_of_month: '',
             day_of_week: '',
             month: '',
@@ -90,7 +102,6 @@ function ReservationForm() {
       })
       .catch((error) => {
         console.error('Error creating reservation:', error);
-        // alert('An error occurred while creating the reservation.');
       });
   };
 
