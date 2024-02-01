@@ -13,16 +13,22 @@ import axios from '../api/axios';
 const EMAIL_REGEX = /^[\w+\-.]+@[a-z\d\-.]+\.[a-z]+$/i;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = 'http://localhost:3000/auth/signup';
+const REGISTER_URL = 'http://localhost:3000/signup';
 function Register() {
   const navigate = useNavigate();
   // To focus on the input form
   const userRef = useRef();
+  const userRef1 = useRef();
   const errRef = useRef();
-  // managing user name
+  const [role, setRole] = useState('');
+  // managing ufirst name
   const [user, setUser] = useState('');
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
+  // managing last name
+  const [user1, setUser1] = useState('');
+  const [validName1, setValidName1] = useState(false);
+  const [userFocus1, setUserFocus1] = useState(false);
   // managing user email
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
@@ -47,6 +53,11 @@ function Register() {
     const result = USER_REGEX.test(user);
     setValidName(result);
   }, [user]);
+  // checking lastname validation
+  useEffect(() => {
+    const result = USER_REGEX.test(user1);
+    setValidName1(result);
+  }, [user1]);
   // checking user Email validation
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
@@ -71,16 +82,19 @@ function Register() {
     const v2 = EMAIL_REGEX.test(email);
     const v3 = PWD_REGEX.test(pwd);
     const v4 = PWD_REGEX.test(matchPwd);
-    if (!v1 || !v2 || !v3 || !v4) {
+    const v5 = PWD_REGEX.test(user1);
+    if (!v1 || !v2 || !v3 || !v4 || !v5) {
       setErrMsg('invalid Entry');
       return;
     }
     const formData = {
       user: {
+        firstname: user,
+        lastname: user1,
+        role,
         email,
-        name: user,
         password: pwd,
-        password_confirmation: matchPwd,
+        // password_confirmation: matchPwd,
       },
     };
     try {
@@ -91,6 +105,7 @@ function Register() {
       // clean up the form
       setEmail('');
       setUser('');
+      setUser1('');
       setPwd('');
       setMatchPwd('');
       navigate('/login');
@@ -154,6 +169,43 @@ function Register() {
                 id="uidnote"
                 className={
                   userFocus && user && !validName ? 'instructions' : 'offscreen'
+                }
+              >
+                <FontAwesomeIcon icon={faInfoCircle} />
+                4 to 24 characters.
+                <br />
+                Must begin with a letter.
+                <br />
+                Letters, numbers, underscores, hyphens allowed.
+              </p>
+              <label htmlFor="lastname">
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  className={validName1 ? 'valid' : 'hide'}
+                />
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  className={validName1 || !user1 ? 'hide' : 'invalid'}
+                />
+              </label>
+              <input
+                type="text"
+                id="username"
+                placeholder="name"
+                ref={userRef1}
+                autoComplete="off"
+                value={user1}
+                onChange={(e) => setUser1(e.target.value)}
+                onFocus={() => setUserFocus1(true)}
+                onBlur={() => setUserFocus1(false)}
+                aria-invalid={validName1 ? 'false' : 'true'}
+                aria-describedby="uidnote"
+                required
+              />
+              <p
+                id="uidnote"
+                className={
+                  userFocus1 && user1 && !validName1 ? 'instructions' : 'offscreen'
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} />
@@ -272,6 +324,12 @@ function Register() {
                 <FontAwesomeIcon icon={faInfoCircle} />
                 Must match the first password input field.
               </p>
+              <select value={role} onChange={(e) => setRole(e.target.value)}>
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="doctor">Doctor</option>
+                <option value="normal">Normal</option>
+              </select>
               <button
                 className="btn-color text-light"
                 type="submit"

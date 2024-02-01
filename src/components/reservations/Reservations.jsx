@@ -39,12 +39,16 @@ const Reservations = () => {
               </tr>
             )}
             {reservations.map((reservation) => (
-              <tr key={reservation.id}>
-                <td className="delete-doctor-name">
-                  {reservation.doctor.name}
-                </td>
-                <td className="delete-doctor-name">{reservation.test_date}</td>
-                <td className="delete-doctor-name">{reservation.city}</td>
+              <tr key={reservation.reservation_id}>
+                <td>{reservation.reservation_id}</td>
+                <td>{reservation.doctor_name}</td>
+                <td>{reservation.reservation_time}</td>
+                <td>{reservation.day_of_week}</td>
+                <td>{reservation.month}</td>
+                <td>{reservation.created_at_formatted}</td>
+                <td>{reservation.booking_user_name}</td>
+                {' '}
+                {/* Display user name */}
               </tr>
             ))}
           </tbody>

@@ -64,11 +64,17 @@ function ReserveNav() {
       doctor_id: selectedDoctor,
       test_date: selectedDate,
       user_id: idNumber,
+      // start_time: parseInt(selectedSlotDetails.start_time.split(':')[0], 10),
+      // Convert start_time to a number
+      // end_time: parseInt(selectedSlotDetails.end_time.split(':')[0], 10),
+      // day_of_month: parseInt(selectedSlotDetails.day_of_month, 10),
+      // day_of_week: selectedSlotDetails.day_of_week,
+      // month: getMonthNumber(selectedSlotDetails.month),
     };
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/users/${id}/reservations`,
+        `http://localhost:3000/doctors/${id}/reservations`, // change to doctor id
         {
           method: 'POST',
           headers: {

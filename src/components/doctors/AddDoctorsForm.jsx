@@ -10,45 +10,61 @@ function AddDoctorsForm() {
   const navigate = useNavigate();
   const { id } = JSON.parse(localStorage.getItem('Token')) || {};
   const [name, setTitle] = useState('');
-  const [image, setPhoto] = useState('');
-  const [year, setYear] = useState('');
-  const [color, setColor] = useState('');
-  const [financeFee, setFinanceFee] = useState('');
-  const [optionPurchase, setOptionPurchase] = useState('');
-  const [totalAmount, setTotalAmount] = useState('');
-  const [description, setDiscription] = useState('');
-  const [duration, setDuration] = useState('');
+  const [picture, setPicture] = useState('');
+  // const [picture, setPicture] = useState('');
+  const [speciality, setSpeciality] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [startingShift, setStartingShift] = useState('');
+  const [endingShift, setEndingShift] = useState('');
+  // const [year, setYear] = useState('');
+  // const [color, setColor] = useState('');
+  // const [financeFee, setFinanceFee] = useState('');
+  // const [optionPurchase, setOptionPurchase] = useState('');
+  // const [totalAmount, setTotalAmount] = useState('');
+  // const [description, setDiscription] = useState('');
+  // const [duration, setDuration] = useState('');
   const [pending, setPending] = useState('Add Doctor');
 
   const nameHandlers = (e) => setTitle(e.target.value);
-  const photoHandlers = (e) => setPhoto(e.target.value);
-  const colorHandlers = (e) => setColor(e.target.value);
-  const financeFeeHandlers = (e) => setFinanceFee(e.target.value);
-  const optionPurchaseHandlers = (e) => setOptionPurchase(e.target.value);
-  const totalAmountHandlers = (e) => setTotalAmount(e.target.value);
-  const DescriptionHandlers = (e) => setDiscription(e.target.value);
-  const YearHandlers = (e) => {
-    const value = e.target.value.trim();
-    const parsedValue = value === '' ? '' : parseInt(value, 10);
-    setYear(parsedValue);
-  };
-  const DurationHandlers = (e) => {
-    const value = e.target.value.trim();
-    const parsedValue = value === '' ? '' : parseInt(value, 10);
-    setDuration(parsedValue);
-  };
+  const photoHandlers = (e) => setPicture(e.target.value);
+  const specialtyHandler = (e) => setSpeciality(e.target.value);
+  const emailHandler = (e) => setEmail(e.target.value);
+  const phoneHandler = (e) => setPhone(e.target.value);
+  const startingShiftHandler = (e) => setStartingShift(e.target.value);
+  const endingShiftHandler = (e) => setEndingShift(e.target.value);
+  // const colorHandlers = (e) => setColor(e.target.value);
+  // const financeFeeHandlers = (e) => setFinanceFee(e.target.value);
+  // const optionPurchaseHandlers = (e) => setOptionPurchase(e.target.value);
+  // const totalAmountHandlers = (e) => setTotalAmount(e.target.value);
+  // const DescriptionHandlers = (e) => setDiscription(e.target.value);
+  // const YearHandlers = (e) => {
+  //   const value = e.target.value.trim();
+  //   const parsedValue = value === '' ? '' : parseInt(value, 10);
+  //   setYear(parsedValue);
+  // };
+  // const DurationHandlers = (e) => {
+  //   const value = e.target.value.trim();
+  //   const parsedValue = value === '' ? '' : parseInt(value, 10);
+  //   setDuration(parsedValue);
+  // };
 
   const postDispatcher = () => {
     const doctorsDetail = {
       name,
-      image,
-      year,
-      color,
-      finance_fee: financeFee,
-      option_to_purchase: optionPurchase,
-      total_amount_payable: totalAmount,
-      description,
-      duration,
+      picture,
+      speciality,
+      email,
+      phone,
+      startingShift,
+      endingShift,
+      // year,
+      // color,
+      // finance_fee: financeFee,
+      // option_to_purchase: optionPurchase,
+      // total_amount_payable: totalAmount,
+      // description,
+      // duration,
     };
 
     setPending('...Adding new doctor');
@@ -88,13 +104,108 @@ function AddDoctorsForm() {
                   type="text"
                   name="doctors_photo"
                   id="doctors_photo"
-                  placeholder="Doctor image url"
+                  placeholder="Doctor picture url"
                   onChange={(e) => {
                     photoHandlers(e);
                   }}
                 />
               </div>
-              <div className="add-doctor-twoInput">
+              <div className="mb-2">
+                {/* <label
+                  htmlFor="specialty"
+                  className="form-label d-block mb
+                -1"
+                >
+                  Specialty:
+                </label> */}
+                <input
+                  className="input-half"
+                  type="text"
+                  name="doctor_color"
+                    // id="doctor_color"
+                  placeholder="Speciality"
+                  onChange={(e) => {
+                    specialtyHandler(e);
+                  }}
+                />
+              </div>
+              <div className="mb-2">
+                {/* <label
+                  htmlFor="specialty"
+                  className="form-label d-block mb
+                -1"
+                >
+                  Specialty:
+                </label> */}
+                <input
+                  className="input-half"
+                  type="email"
+                  name="doctor_color"
+                    // id="doctor_color"
+                  placeholder="email"
+                  onChange={(e) => {
+                    emailHandler(e);
+                  }}
+                />
+              </div>
+              <div className="mb-2">
+                {/* <label
+                  htmlFor="specialty"
+                  className="form-label d-block mb
+                -1"
+                >
+                  Specialty:
+                </label> */}
+                <input
+                  className="input-half"
+                  type="tel"
+                  name="doctor_color"
+                    // id="doctor_color"
+                  placeholder="Speciality"
+                  onChange={(e) => {
+                    phoneHandler(e);
+                  }}
+                />
+              </div>
+              <div className="mb-2">
+                {/* <label
+                  htmlFor="specialty"
+                  className="form-label d-block mb
+                -1"
+                >
+                  Specialty:
+                </label> */}
+                <input
+                  className="input-half"
+                  type="text"
+                  name="doctor_color"
+                    // id="doctor_color"
+                  placeholder="Starting shift"
+                  onChange={(e) => {
+                    startingShiftHandler(e);
+                  }}
+                />
+              </div>
+              <div className="mb-2">
+                {/* <label
+                  htmlFor="specialty"
+                  className="form-label d-block mb
+                -1"
+                >
+                  Specialty:
+                </label> */}
+                <input
+                  className="input-half"
+                  type="text"
+                  name="doctor_color"
+                    // id="doctor_color"
+                  placeholder="ending shift"
+                  onChange={(e) => {
+                    endingShiftHandler(e);
+                  }}
+                />
+              </div>
+              {/* <div className="add-doctor-twoInput">
                 <div className="mb-2">
                   <input
                     className="input-half"
@@ -185,7 +296,7 @@ function AddDoctorsForm() {
                     DescriptionHandlers(e);
                   }}
                 />
-              </div>
+              </div> */}
               <div className="mb-2 d-flex justify-content-center align-items-center">
                 <button
                   className="add-doctor-btn btn-primary"

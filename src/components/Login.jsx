@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from '../api/axios';
 import AuthContext from '../context/AuthProvider';
-const LOGIN_URL = 'http://localhost:3000/auth/login';
+const LOGIN_URL = 'http://localhost:3000/login';
 function Login() {
   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
@@ -14,6 +14,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const token = localStorage.getItem('userToken'); 
   useEffect(() => {
     userRef.current.focus();
   }, []);
