@@ -13,7 +13,7 @@ const initialState = {
 export const fetchDoctors = createAsyncThunk(
   'doctors/fetchDoctors',
   async (userId) => {
-    const url = `http://localhost:3000/api/v1/users/${userId}/doctors`;
+    const url = `http://localhost:3000/api/v1/users/${userId}/doctors`; // http://localhost:3000/doctors
     try {
       const response = await axios.get(url);
       return response.data;
@@ -47,7 +47,7 @@ export const addNewDoctors = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       };
-      const baseUrl = `http://localhost:3000/api/v1/users/${data.userId}/doctors`;
+      const baseUrl = `http://localhost:3000/api/v1/users/${data.userId}/doctors`; // http://localhost:3000/doctors
 
       const response = await axios.post(
         baseUrl,

@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const fetchReservations = createAsyncThunk('reservations/fetchReservations', async (userId) => {
-  const url = `http://localhost:3000/api/v1/users/${userId}/reservations`;
+  const url = `http://localhost:3000/api/v1/users/${userId}/reservations`; // http://localhost:3000/all_reservations
   try {
     const response = await axios.get(url);
     return response.data;
