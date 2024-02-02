@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-// import toast from 'react-hot-toast';
 
 const initialState = {
   availableSlots: [],
@@ -12,11 +11,14 @@ export const fetchAvailableSlots = createAsyncThunk(
   'reservation/fetchAvailableSlots',
   async ({ doctorId, authToken }) => {
     try {
-      const response = await axios.get(`http://localhost:3000/doctors/${doctorId}/available_slots`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
+      const response = await axios.get(
+        `http://localhost:3000/doctors/${doctorId}/available_slots`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
         },
-      });
+      );
       return response.data;
     } catch (error) {
       throw Error(error);

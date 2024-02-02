@@ -3,7 +3,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
-// import RequireAuth from './components/RequireAuth';s
+import RequireAuth from './components/RequireAuth';
 import AddDoctorsForm from './components/doctors/AddDoctorsForm';
 import Session from './components/session/Session';
 import MainPage from './components/doctors/MainPage';
@@ -18,15 +18,15 @@ const App = () => (
     <Route path="/" element={<Session />} />
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
-    {/* <Route element={<RequireAuth />}> */}
-    <Route exact path="/add-doctor" element={<AddDoctorsForm />} />
-    <Route path="/main-page" element={<MainPage />} />
-    <Route path="/details/:doctorId" element={<DoctorDetails />} />
-    <Route path="/doctors/delete" element={<DeleteDoctor />} />
-    <Route path="/reservations" element={<Reservations />} />
-    <Route path="/reserve-nav" element={<ReserveNav />} />
-    <Route path="/reserve-details/:doctorId" element={<ReserveDetails />} />
-    {/* </Route> */}
+    <Route element={<RequireAuth />}>
+      <Route exact path="/add-doctor" element={<AddDoctorsForm />} />
+      <Route path="/main-page" element={<MainPage />} />
+      <Route path="/details/:doctorId" element={<DoctorDetails />} />
+      <Route path="/doctors/delete" element={<DeleteDoctor />} />
+      <Route path="/reservations" element={<Reservations />} />
+      <Route path="/reserve-nav" element={<ReserveNav />} />
+      <Route path="/reserve-details/:doctorId" element={<ReserveDetails />} />
+    </Route>
   </Routes>
 );
 

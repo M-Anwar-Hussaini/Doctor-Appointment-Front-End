@@ -12,11 +12,15 @@ const initialState = {
 
 export const fetchDoctors = createAsyncThunk(
   'doctors/fetchDoctors',
-  async (userId) => {
-    const url = `http://localhost:3000/api/v1/users/${userId}/doctors`; // http://localhost:3000/doctors
+  async () => {
     try {
-      const response = await axios.get(url);
-      return response.data;
+      const authToken = JSON.parse(localStorage.getItem('userToken'));
+      const response = await fetch('http://localhost:3000/doctors', {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      return response.json();
     } catch (error) {
       throw Error(error);
     }
@@ -26,8 +30,20 @@ export const fetchDoctors = createAsyncThunk(
 export const fetchDoctorById = createAsyncThunk(
   'doctors/fetchDoctorById',
   async (data) => {
-    const url = `http://localhost:3000/api/v1/users/${data.userId}/doctors/${data.doctorId}`;
+    const authToken = JSON.parse(localStorage.getItem('userToken'));
+    // Define 'url' here
+    const url = `http://localhost:3000/doctors/${data.doctorId}`;
+    await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((doctor) => {
+        data.doctors.push(doctor);
+      });
     try {
+      // Use 'url' here
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
@@ -39,25 +55,23 @@ export const fetchDoctorById = createAsyncThunk(
 export const addNewDoctors = createAsyncThunk(
   'doctors/addNewDoctors',
   async (data) => {
-    const { authToken } = data.id;
     try {
-      const config = {
-        headers: {
-          authorization: authToken,
-          'Content-Type': 'application/json',
-        },
+      const authToken = JSON.parse(localStorage.getItem('userToken'));
+      const formData = {
+        doctor: data.doctor,
       };
-      const baseUrl = `http://localhost:3000/api/v1/users/${data.userId}/doctors`; // http://localhost:3000/doctors
 
-      const response = await axios.post(
-        baseUrl,
-        JSON.stringify({
-          doctor: data.doctor,
-        }),
-        config,
-      );
+      const response = await fetch('http://localhost:3000/doctors', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
       toast.success(`Doctor Successfully ${response.statusText} `);
-      return response.data;
+      return response.json();
     } catch (error) {
       toast.error('Opps failed to create Doctor');
       throw Error(error);

@@ -2,7 +2,7 @@ import { useLocation, Navigate, Outlet } from 'react-router-dom';
 
 function RequireAuth() {
   const location = useLocation();
-  const getToken = JSON.parse(localStorage.getItem('userToken')) || '';
+  const getToken = localStorage.getItem('userToken') || '';
 
   return getToken ? (
     <Outlet />

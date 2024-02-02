@@ -1,81 +1,61 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { addNewDoctors, fetchDoctors } from '../../redux/features/doctorsSlice';
+// import { useDispatch } from 'react-redux';
+// import { useNavigate } from 'react-router-dom';
+// import { addNewDoctors, fetchDoctors } from '../../redux/features/doctorsSlice';
 import Navbar from '../Navbar';
 import '../../assets/css/doctorForm.css';
 
 function AddDoctorsForm() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { id } = JSON.parse(localStorage.getItem('Token')) || {};
-  const [name, setTitle] = useState('');
+  const [name, setName] = useState('');
   const [picture, setPicture] = useState('');
-  // const [picture, setPicture] = useState('');
   const [speciality, setSpeciality] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [startingShift, setStartingShift] = useState('');
   const [endingShift, setEndingShift] = useState('');
-  // const [year, setYear] = useState('');
-  // const [color, setColor] = useState('');
-  // const [financeFee, setFinanceFee] = useState('');
-  // const [optionPurchase, setOptionPurchase] = useState('');
-  // const [totalAmount, setTotalAmount] = useState('');
-  // const [description, setDiscription] = useState('');
-  // const [duration, setDuration] = useState('');
-  const [pending, setPending] = useState('Add Doctor');
 
-  const nameHandlers = (e) => setTitle(e.target.value);
-  const photoHandlers = (e) => setPicture(e.target.value);
-  const specialtyHandler = (e) => setSpeciality(e.target.value);
-  const emailHandler = (e) => setEmail(e.target.value);
-  const phoneHandler = (e) => setPhone(e.target.value);
-  const startingShiftHandler = (e) => setStartingShift(e.target.value);
-  const endingShiftHandler = (e) => setEndingShift(e.target.value);
-  // const colorHandlers = (e) => setColor(e.target.value);
-  // const financeFeeHandlers = (e) => setFinanceFee(e.target.value);
-  // const optionPurchaseHandlers = (e) => setOptionPurchase(e.target.value);
-  // const totalAmountHandlers = (e) => setTotalAmount(e.target.value);
-  // const DescriptionHandlers = (e) => setDiscription(e.target.value);
-  // const YearHandlers = (e) => {
-  //   const value = e.target.value.trim();
-  //   const parsedValue = value === '' ? '' : parseInt(value, 10);
-  //   setYear(parsedValue);
-  // };
-  // const DurationHandlers = (e) => {
-  //   const value = e.target.value.trim();
-  //   const parsedValue = value === '' ? '' : parseInt(value, 10);
-  //   setDuration(parsedValue);
-  // };
-
-  const postDispatcher = () => {
-    const doctorsDetail = {
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = {
       name,
       picture,
       speciality,
       email,
       phone,
-      startingShift,
-      endingShift,
-      // year,
-      // color,
-      // finance_fee: financeFee,
-      // option_to_purchase: optionPurchase,
-      // total_amount_payable: totalAmount,
-      // description,
-      // duration,
+      starting_shift: startingShift,
+      ending_shift: endingShift,
     };
-
-    setPending('...Adding new doctor');
-
-    dispatch(addNewDoctors({ doctor: doctorsDetail, id }));
-
-    setTimeout(() => {
-      dispatch(fetchDoctors(id));
-      setPending('Add Doctor');
-      navigate('/main-page');
-    }, 1000);
+    console.log(formData);
+    try {
+      // Retrieve the token from local storage
+      const authToken = localStorage.getItem('userToken');
+      const response = await fetch('http://localhost:3000/doctors', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`, // Include the authorization token
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        // Doctor created successfully
+        console.log('Doctor created successfully');
+        // Reset form fields
+        setName('');
+        setPicture('');
+        setSpeciality('');
+        setEmail('');
+        setPhone('');
+        setStartingShift('');
+        setEndingShift('');
+      } else {
+        // Error creating doctor
+        console.error('Failed to create doctor');
+      }
+    } catch (error) {
+      console.error('Error creating doctor:', error);
+    }
   };
 
   return (
@@ -93,9 +73,7 @@ function AddDoctorsForm() {
                   name="doctors_name"
                   id="doctors_id"
                   placeholder="Doctor name"
-                  onChange={(e) => {
-                    nameHandlers(e);
-                  }}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="mb-2">
@@ -105,9 +83,7 @@ function AddDoctorsForm() {
                   name="doctors_photo"
                   id="doctors_photo"
                   placeholder="Doctor picture url"
-                  onChange={(e) => {
-                    photoHandlers(e);
-                  }}
+                  onChange={(e) => setPicture(e.target.value)}
                 />
               </div>
               <div className="mb-2">
@@ -122,11 +98,9 @@ function AddDoctorsForm() {
                   className="input-half"
                   type="text"
                   name="doctor_color"
-                    // id="doctor_color"
+                  // id="doctor_color"
                   placeholder="Speciality"
-                  onChange={(e) => {
-                    specialtyHandler(e);
-                  }}
+                  onChange={(e) => setSpeciality(e.target.value)}
                 />
               </div>
               <div className="mb-2">
@@ -141,11 +115,9 @@ function AddDoctorsForm() {
                   className="input-half"
                   type="email"
                   name="doctor_color"
-                    // id="doctor_color"
+                  // id="doctor_color"
                   placeholder="email"
-                  onChange={(e) => {
-                    emailHandler(e);
-                  }}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="mb-2">
@@ -160,11 +132,9 @@ function AddDoctorsForm() {
                   className="input-half"
                   type="tel"
                   name="doctor_color"
-                    // id="doctor_color"
+                  // id="doctor_color"
                   placeholder="Speciality"
-                  onChange={(e) => {
-                    phoneHandler(e);
-                  }}
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
               <div className="mb-2">
@@ -179,11 +149,9 @@ function AddDoctorsForm() {
                   className="input-half"
                   type="text"
                   name="doctor_color"
-                    // id="doctor_color"
+                  // id="doctor_color"
                   placeholder="Starting shift"
-                  onChange={(e) => {
-                    startingShiftHandler(e);
-                  }}
+                  onChange={(e) => setStartingShift(e.target.value)}
                 />
               </div>
               <div className="mb-2">
@@ -198,11 +166,9 @@ function AddDoctorsForm() {
                   className="input-half"
                   type="text"
                   name="doctor_color"
-                    // id="doctor_color"
+                  // id="doctor_color"
                   placeholder="ending shift"
-                  onChange={(e) => {
-                    endingShiftHandler(e);
-                  }}
+                  onChange={(e) => setEndingShift(e.target.value)}
                 />
               </div>
               {/* <div className="add-doctor-twoInput">
@@ -303,11 +269,9 @@ function AddDoctorsForm() {
                   type="button"
                   name="Add-Doctors"
                   id="AddDoctors"
-                  onClick={() => {
-                    postDispatcher();
-                  }}
+                  onClick={handleSubmit}
                 >
-                  {pending}
+                  Save
                 </button>
               </div>
             </form>

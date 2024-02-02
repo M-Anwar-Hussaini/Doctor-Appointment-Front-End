@@ -14,7 +14,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
-  const token = localStorage.getItem('userToken'); 
+  const token = localStorage.getItem('userToken');
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -23,32 +23,54 @@ function Login() {
   }, [email, pwd]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {
-      user: {
-        email,
-        password: pwd,
-      },
-    };
+    // const formData = {
+    //   user: {
+    //     email,
+    //     password: pwd,
+    //   },
+    // };
     try {
-      const res = await axios.post(LOGIN_URL, JSON.stringify(formData), {
-        headers: { 'Content-Type': 'application/json' },
-        Accept: '*/*',
+      // const res = await axios.post(LOGIN_URL, JSON.stringify(formData), {
+      //   headers: { 'Content-Type': 'application/json' },
+      //   Accept: 'application/json',
+      // });
+      // const authToken = res.headers.authorization;
+      // const { role } = res.data.data;
+      // const username = res.data.data.name;
+      // const { id } = res.data.data;
+      // setAuth({
+      //   role,
+      //   authToken,
+      //   email,
+      //   username,
+      //   id,
+      // });
+      // localStorage.setItem(
+      //   'Token',
+      //   JSON.stringify({ authToken, username, id, role }),
+      // );
+      const loginResponse = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password: pwd,
+        }),
       });
-      const authToken = res.headers.authorization;
-      const { role } = res.data.data;
-      const username = res.data.data.name;
-      const { id } = res.data.data;
-      setAuth({
-        role,
-        authToken,
-        email,
-        username,
-        id,
-      });
-      localStorage.setItem(
-        'Token',
-        JSON.stringify({ authToken, username, id, role }),
-      );
+
+      if (!loginResponse.ok) {
+        throw new Error('Error logging in');
+      }
+
+      const userData = await loginResponse.json();
+      console.log('Login successful:', userData);
+      const { token } = userData;
+      console.log('NA THE TOKEN BE THIS :', token);
+      // Store user session or token in your frontend application
+      // For example, you can use localStorage or sessionStorage
+      localStorage.setItem('userToken', token);
       setEmail('');
       setPwd('');
       navigate('/main-page');

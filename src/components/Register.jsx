@@ -8,12 +8,12 @@ import {
   faTimes,
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import axios from '../api/axios';
+// import axios from '../api/axios';
 
 const EMAIL_REGEX = /^[\w+\-.]+@[a-z\d\-.]+\.[a-z]+$/i;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = 'http://localhost:3000/signup';
+// const REGISTER_URL = 'http://localhost:3000/signup';
 function Register() {
   const navigate = useNavigate();
   // To focus on the input form
@@ -78,30 +78,51 @@ function Register() {
     e.preventDefault();
     // if the button is hack with js
     // this safeguard to not submit
-    const v1 = USER_REGEX.test(user);
-    const v2 = EMAIL_REGEX.test(email);
-    const v3 = PWD_REGEX.test(pwd);
-    const v4 = PWD_REGEX.test(matchPwd);
-    const v5 = PWD_REGEX.test(user1);
-    if (!v1 || !v2 || !v3 || !v4 || !v5) {
-      setErrMsg('invalid Entry');
-      return;
-    }
-    const formData = {
-      user: {
-        firstname: user,
-        lastname: user1,
-        role,
-        email,
-        password: pwd,
-        // password_confirmation: matchPwd,
-      },
-    };
+    // const v1 = USER_REGEX.test(user);
+    // const v2 = EMAIL_REGEX.test(email);
+    // const v3 = PWD_REGEX.test(pwd);
+    // const v4 = PWD_REGEX.test(matchPwd);
+    // const v5 = PWD_REGEX.test(user1);
+    // if (!v1 || !v2 || !v3 || !v4 || !v5) {
+    //   setErrMsg('invalid Entry');
+    //   return;
+    // }
+    // const formData = {
+    //   firstname: user,
+    //   lastname: user1,
+    //   role,
+    //   email,
+    //   password: pwd,
+    //   // password_confirmation: matchPwd,
+    // };
+    // try {
+    //   console.log('Form data: ', formData);
+    //   axios.post(REGISTER_URL, formData, {
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //   });
     try {
-      axios.post(REGISTER_URL, JSON.stringify(formData), {
-        headers: { 'Content-Type': 'application/json' },
-        Accept: '*/*',
+      const response = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstname: user,
+          lastname: user1,
+          role,
+          email,
+          password: pwd,
+          // password_digest: passwordDigest,
+        }),
       });
+
+      console.log(pwd, email);
+
+      if (!response.ok) {
+        throw new Error('Error signing up');
+      }
       // clean up the form
       setEmail('');
       setUser('');
@@ -205,7 +226,9 @@ function Register() {
               <p
                 id="uidnote"
                 className={
-                  userFocus1 && user1 && !validName1 ? 'instructions' : 'offscreen'
+                  userFocus1 && user1 && !validName1
+                    ? 'instructions'
+                    : 'offscreen'
                 }
               >
                 <FontAwesomeIcon icon={faInfoCircle} />
