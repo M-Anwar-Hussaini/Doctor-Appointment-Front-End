@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './context/AuthProvider';
 import { Toaster } from 'sonner';
+import { AuthProvider } from './context/AuthProvider';
 import './assets/css/index.css';
 import store from './redux/store';
 import App from './App';
@@ -17,7 +17,7 @@ root.render(
     <React.StrictMode>
       <BrowserRouter>
         <AuthProvider>
-          <Toaster />
+          <Toaster richColors position="top-right" />
           <App />
         </AuthProvider>
       </BrowserRouter>

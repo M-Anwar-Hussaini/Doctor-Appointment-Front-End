@@ -120,6 +120,7 @@ function Register() {
       });
 
       if (!response.ok) {
+        toast.error('Sign up failed');
         throw new Error('Error signing up');
       }
 

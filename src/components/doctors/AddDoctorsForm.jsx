@@ -56,6 +56,7 @@ function AddDoctorsForm() {
       }
     } catch (error) {
       console.error('Error creating doctor:', error);
+      toast.error('Error creating doctor');
     }
   };
 
@@ -74,6 +75,7 @@ function AddDoctorsForm() {
                   name="doctors_name"
                   id="doctors_id"
                   placeholder="Doctor name"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
@@ -84,6 +86,7 @@ function AddDoctorsForm() {
                   name="doctors_photo"
                   id="doctors_photo"
                   placeholder="Doctor picture url"
+                  value={picture}
                   onChange={(e) => setPicture(e.target.value)}
                 />
               </div>
@@ -101,6 +104,7 @@ function AddDoctorsForm() {
                   name="doctor_color"
                   // id="doctor_color"
                   placeholder="Speciality"
+                  value={speciality}
                   onChange={(e) => setSpeciality(e.target.value)}
                 />
               </div>
@@ -118,6 +122,7 @@ function AddDoctorsForm() {
                   name="doctor_color"
                   // id="doctor_color"
                   placeholder="email"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -135,6 +140,7 @@ function AddDoctorsForm() {
                   name="doctor_color"
                   // id="doctor_color"
                   placeholder="Speciality"
+                  value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
@@ -148,10 +154,11 @@ function AddDoctorsForm() {
                 </label> */}
                 <input
                   className="input-half"
-                  type="text"
+                  type="time"
                   name="doctor_color"
                   // id="doctor_color"
                   placeholder="Starting shift"
+                  value={startingShift}
                   onChange={(e) => setStartingShift(e.target.value)}
                 />
               </div>
@@ -165,10 +172,11 @@ function AddDoctorsForm() {
                 </label> */}
                 <input
                   className="input-half"
-                  type="text"
+                  type="time"
                   name="doctor_color"
                   // id="doctor_color"
                   placeholder="ending shift"
+                  value={endingShift}
                   onChange={(e) => setEndingShift(e.target.value)}
                 />
               </div>

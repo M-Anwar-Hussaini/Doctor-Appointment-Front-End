@@ -61,6 +61,7 @@ function Login() {
       });
 
       if (!loginResponse.ok) {
+        toast.error('Login failed');
         throw new Error('Error logging in');
       }
 
