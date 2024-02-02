@@ -1,26 +1,25 @@
 /* eslint-disable react/function-component-definition */
-import React, { useState } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import {
-  FaTwitter,
-  FaFacebookF,
-  FaVimeoV,
-  FaPinterestP,
-} from 'react-icons/fa6';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import useAuth from '../hooks/seAuth';
+import {
+  FaFacebookF,
+  FaPinterestP,
+  FaTwitter,
+  FaVimeoV,
+} from 'react-icons/fa6';
 import logo from '../assets/logo.png';
+import useAuth from '../hooks/seAuth';
 
 const Navbar = () => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const location = useLocation();
   const { setAuth } = useAuth();
   const navigate = useNavigate();
-  const { authToken, role } = JSON.parse(localStorage.getItem('Token')) || {};
+  const { authToken, role } = localStorage.getItem('userToken') || {};
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
@@ -29,13 +28,14 @@ const Navbar = () => {
   };
   const handleLogout = async () => {
     setAuth({});
-    localStorage.removeItem('Token');
+    localStorage.removeItem('userToken');
     try {
       if (authToken) {
-        await axios.delete('http://localhost:3000/auth/logout', {
+        await fetch('http://localhost:3000/doctors', {
+          method: 'DELETE',
           headers: {
-            Authorization: authToken,
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`, // Include the authorization token
           },
         });
         toast.success('Logout Successfully');
