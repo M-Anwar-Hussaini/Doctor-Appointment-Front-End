@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../assets/css/reservation.css';
@@ -18,6 +18,8 @@ function CityDropdown() {
     });
     return time;
   };
+
+  console.log(availableSlots);
 
   const fetchDoctors = async () => {
     try {
