@@ -8,7 +8,7 @@ function Session() {
   useEffect(() => {
     const { authToken } = JSON.parse(localStorage.getItem('Token')) || {};
     if (authToken) {
-      navigate('/main-page');
+      navigate('/app');
     }
   }, [navigate]);
 

@@ -1,7 +1,7 @@
 /* eslint-disable */
-import React, { useEffect, useState, useRef, useContext } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from '../api/axios';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
 const LOGIN_URL = 'http://localhost:3000/login';
 function Login() {
@@ -64,6 +64,8 @@ function Login() {
         throw new Error('Error logging in');
       }
 
+      toast.success('Login successful');
+
       const userData = await loginResponse.json();
       console.log('Login successful:', userData);
       const { token } = userData;
@@ -73,7 +75,7 @@ function Login() {
       localStorage.setItem('userToken', token);
       setEmail('');
       setPwd('');
-      navigate('/main-page');
+      navigate('/app');
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');

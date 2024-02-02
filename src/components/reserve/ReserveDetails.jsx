@@ -57,7 +57,7 @@ function ReserveDetails() {
   const idNumber = parseInt(id, 10);
 
   if (doctors.length === 0) {
-    navigate('/main-page');
+    navigate('/app');
   }
 
   const handleSubmit = async (e) => {
@@ -97,7 +97,7 @@ function ReserveDetails() {
     <div className="reserve-container">
       <div className="background">
         <div className="reserve-back-btn">
-          <Link to="/main-page">Go Back</Link>
+          <Link to="/app">Go Back</Link>
         </div>
         <h3 id="reserve-title">Reserve a Test Drive</h3>
         <div className="reserve-content">

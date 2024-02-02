@@ -20,7 +20,7 @@ const App = () => (
     <Route path="/register" element={<Register />} />
     <Route element={<RequireAuth />}>
       <Route exact path="/add-doctor" element={<AddDoctorsForm />} />
-      <Route path="/main-page" element={<MainPage />} />
+      <Route path="/app" element={<MainPage />} />
       <Route path="/details/:doctorId" element={<DoctorDetails />} />
       <Route path="/doctors/delete" element={<DeleteDoctor />} />
       <Route path="/reservations" element={<Reservations />} />

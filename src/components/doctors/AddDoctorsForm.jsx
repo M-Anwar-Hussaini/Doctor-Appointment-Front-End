@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 // import { addNewDoctors, fetchDoctors } from '../../redux/features/doctorsSlice';
 import Navbar from '../Navbar';
 import '../../assets/css/doctorForm.css';
@@ -40,7 +41,7 @@ function AddDoctorsForm() {
       });
       if (response.ok) {
         // Doctor created successfully
-        console.log('Doctor created successfully');
+        toast.success('Doctor created successfully');
         // Reset form fields
         setName('');
         setPicture('');

@@ -54,7 +54,7 @@ function ReserveNav() {
   const [selectedDate, setSelectedDate] = useState('');
 
   if (doctors.length === 0) {
-    navigate('/main-page');
+    navigate('/app');
   }
 
   const handleSubmit = async (e) => {
@@ -100,7 +100,7 @@ function ReserveNav() {
     <div className="reserve-container">
       <div className="background">
         <div className="reserve-back-btn">
-          <Link to="/main-page"> Go Back to Main Page</Link>
+          <Link to="/app"> Go Back to Main Page</Link>
         </div>
 
         <h3 id="reserve-title">Reserve a Test Drive</h3>

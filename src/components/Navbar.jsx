@@ -62,9 +62,9 @@ const Navbar = () => {
         </div>
         <div className="sidebar-links-container">
           <Link
-            to="/main-page"
+            to="/app"
             className={`nav-link ${
-              location.pathname === '/main-page' ? 'active' : ''
+              location.pathname === '/app' ? 'active' : ''
             }`}
             onClick={closeSidebar}
           >

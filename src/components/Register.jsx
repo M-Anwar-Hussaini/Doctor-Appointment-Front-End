@@ -8,6 +8,7 @@ import {
   faTimes,
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'sonner';
 // import axios from '../api/axios';
 
 const EMAIL_REGEX = /^[\w+\-.]+@[a-z\d\-.]+\.[a-z]+$/i;
@@ -118,11 +119,12 @@ function Register() {
         }),
       });
 
-      console.log(pwd, email);
-
       if (!response.ok) {
         throw new Error('Error signing up');
       }
+
+      toast.success('Sign up successful');
+
       // clean up the form
       setEmail('');
       setUser('');
