@@ -1,36 +1,91 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import '../../assets/css/reservation.css';
 
-function CityDropdown({ onSelectCity }) {
-  const cityItems = useSelector((store) => store.cities);
-  const [cities, setCities] = useState([]);
+function CityDropdown() {
+  const [doctors, setDoctors] = useState([]);
+  const [userToken, setUserToken] = useState(localStorage.getItem('userToken'));
+  const [availableSlots, setAvailableSlots] = useState([]);
+
+  const extractTime = (datetimeString) => {
+    const time = new Date(datetimeString).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    return time;
+  };
+
+  const fetchDoctors = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/doctors', {
+        headers: {
+          Authorization: `Bearer ${userToken}`, // Include the auth token in the headers
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        // Convert starting_shift and ending_shift to time format
+        const formattedData = data.map((doctor) => ({
+          ...doctor,
+          starting_shift: extractTime(doctor.starting_shift),
+          // starting_shift: doctor.starting_shift,
+          ending_shift: extractTime(doctor.ending_shift),
+        }));
+        setDoctors(formattedData);
+        console.log(formattedData);
+      } else {
+        console.error('Failed to fetch doctors');
+      }
+    } catch (error) {
+      console.error('Error fetching doctors:', error);
+    }
+  };
+
+  // fetch availble slots
+  const fetchAvailableSlots = async (doctorId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/doctors/${doctorId}/available_slots`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`, // Include the auth token in the headers
+          },
+        },
+      );
+      console.log('THIS IS THE doctorId', doctorId);
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setAvailableSlots(data);
+      } else {
+        console.error('Failed to fetch available slots');
+      }
+    } catch (error) {
+      console.error('Error fetching available slots:', error);
+    }
+  };
 
   useEffect(() => {
-    setCities(cityItems.cityItems);
-  }, [cityItems.cityItems]);
-
-  const handleCityChange = (event) => {
-    onSelectCity(event.target.value);
-  };
+    setUserToken(localStorage.getItem('userToken'));
+    fetchDoctors();
+  }, []);
 
   return (
     <div className="reserve-inputSection">
-      <label htmlFor="cityList" className="reserve-label">
-        <select
-          id="cityList"
-          name="cityList"
-          onChange={handleCityChange}
-          required
-        >
-          <option value="">Select a city</option>
-          {cities.map((city) => (
-            <option key={city.id} value={city.city}>
-              {city.city}
+      <label htmlFor="doctorList" className="reserve-label">
+        <select id="doctorList" name="doctorList" required>
+          <option value="">Select a doctor</option>
+          {doctors.map((doctor) => (
+            <option
+              key={doctor.id}
+              className="doctor-item"
+              onChange={() => fetchAvailableSlots(doctor.id)}
+            >
+              {doctor.name}
             </option>
           ))}
         </select>
