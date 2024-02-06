@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Styles/Doctorform.css';
 
-const DoctorForm = () => {
+function DoctorForm() {
   // State variables to store form data
   const [name, setName] = useState('');
   const [picture, setPicture] = useState('');
@@ -147,6 +147,6 @@ const DoctorForm = () => {
       </form>
     </>
   );
-};
+}
 
 export default DoctorForm;

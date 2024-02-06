@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Styles/DoctorsList.css';
 import AuthContext from '../Auth/AuthContext';
 
-const DoctorsList = () => {
+function DoctorsList() {
   const [doctors, setDoctors] = useState([]);
   const { authToken, setAuthToken } = useContext(AuthContext);
 
@@ -107,6 +107,6 @@ const DoctorsList = () => {
       </ul>
     </div>
   );
-};
+}
 
 export default DoctorsList;

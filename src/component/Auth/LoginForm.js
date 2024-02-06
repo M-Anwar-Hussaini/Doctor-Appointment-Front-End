@@ -4,7 +4,7 @@ import '../Doctor/Styles/login.css';
 import { Link } from 'react-router-dom';
 import AuthContext from './AuthContext';
 
-const LoginForm = () => {
+function LoginForm() {
   // const [firstname, setFirstname] = useState('');
   // const [lastname, setLastname] = useState('');
   // const [role, setRole] = useState('');
@@ -47,6 +47,6 @@ const LoginForm = () => {
       {error && <p>{error}</p>}
     </form>
   );
-};
+}
 
 export default LoginForm;

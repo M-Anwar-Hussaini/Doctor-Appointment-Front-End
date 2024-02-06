@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AuthContext from './AuthContext';
 
-const AuthProvider = ({ children }) => {
+function AuthProvider({ children }) {
   const [authToken, setAuthToken] = useState(null);
 
   return (
@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired, // Validate children prop

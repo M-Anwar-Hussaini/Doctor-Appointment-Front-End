@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import '../Doctor/Styles/login.css';
 import AuthContext from './AuthContext';
 
-const SignupForm = () => {
+function SignupForm() {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
@@ -100,6 +100,6 @@ const SignupForm = () => {
       {error && <p>{error}</p>}
     </form>
   );
-};
+}
 
 export default SignupForm;
